@@ -1,0 +1,28 @@
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+    "username":"arun_prajapati",
+    "email":"arunpraja5@gmail.com",
+    "password":"arun_123"
+}
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username":"arun_prajapati",
+    "password":"arun_12"
+}
+
+###
+
+POST http://localhost:3000/forget-password
+Content-Type: application/json
+
+{
+    "username":"arun_prajapati",
+    "email":"arunpraja5@gmail.com"
+}
