@@ -1,16 +1,26 @@
 # Authentication
 
-Given an `app.js` file and a database file `userData.db` consisting of tables `user` and `user_details`.
+Given an `app.js` file and a database file `userData.db` consisting of tables `user`, `user_details` and `post_details`.
 
-Written APIs to perform operations on the table `user_details` containing the following columns,
+Written APIs to perform operations on the table `user_details` and `post_details` containing the following columns,
 
-**User Table**
+**user_details Table**
 
 | Column   | Type |
 | -------- | ---- |
 | username | TEXT |
 | email    | TEXT |
 | password | TEXT |
+
+**post_details Table**
+
+| Column          | Type     |
+| --------------- | -------- |
+| post_id         | INTEGER  |
+| post_content    | TEXT     |
+| comment_content | TEXT     |
+| reaction_type   | TEXT     |
+| posted_at       | DATETIME |
 
 ### API 1
 
@@ -156,7 +166,7 @@ Written APIs to perform operations on the table `user_details` containing the fo
       ```
 
 - **Scenario 2**
-  If a registered try to use forget password
+  If a registered user try to use forget password
 
 - **Response**
   - **Status code**
@@ -166,4 +176,127 @@ Written APIs to perform operations on the table `user_details` containing the fo
   - **Status text**
     ```
     Please click on the link to reset your password.
+    ```
+
+### API 4
+
+#### Path: `/post/`
+
+#### Method: `GET`
+
+- **Response**
+  - **Status code**
+    ```
+    200
+    ```
+  - **Status text**
+    ```
+    Returns list of all posts from post_details table.
+    ```
+
+### API 5
+
+#### Path: `/post/:postId/`
+
+#### Method: `GET`
+
+- **Response**
+  - **Status code**
+    ```
+    200
+    ```
+  - **Status text**
+    ```
+    Returns a specific post based on the post ID from post_details table.
+    ```
+
+### API 6
+
+#### Path: `/add-post/`
+
+#### Method: `POST`
+
+**Request**
+
+```
+{
+    "postId":8,
+    "postContent":"Help receive certainly case",
+    "commentContent":"Remember country",
+    "reactionType":"LIKE",
+    "postedAt":"2023-01-10 15:09:32"
+}
+```
+
+- **Response**
+  - **Status code**
+    ```
+    200
+    ```
+  - **Status text**
+    ```
+    Post Added Successfully!.
+    ```
+
+### API 7
+
+#### Path: `/update-post/:postId/`
+
+#### Method: `PUT`
+
+Updates a post from the post_details table based on the post ID.
+
+**Request**
+
+```
+{
+    "postContent":"Design clear grow lot",
+    "commentContent":"Should language hot get law",
+    "reactionType":"DISLIKE",
+    "postedAt":"2023-01-10 15:09:32"
+}
+```
+
+- **Response**
+  - **Status code**
+    ```
+    200
+    ```
+  - **Status text**
+    ```
+    Post Details Updated!.
+    ```
+
+### API 8
+
+#### Path: `/delete-post/:postId/`
+
+#### Method: `DELETE`
+
+Deletes a post from the post_details table based on the post ID.
+
+- **Response**
+  - **Status code**
+    ```
+    200
+    ```
+  - **Status text**
+    ```
+    Post Removed!.
+    ```
+
+### API 9
+
+#### Path: `/recent-post/`
+
+#### Method: `GET`
+
+- **Response**
+  - **Status code**
+    ```
+    200
+    ```
+  - **Status text**
+    ```
+    Returns top 3 recent posts from post_details table.
     ```

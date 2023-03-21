@@ -2,9 +2,9 @@ POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "username":"arun_prajapati",
-    "email":"arunpraja5@gmail.com",
-    "password":"arun_123"
+    "username":"ajit_yadav",
+    "email":"ajit@gmail.com",
+    "password":"ajit_123"
 }
 
 ###
@@ -13,8 +13,8 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username":"arun_prajapati",
-    "password":"arun_12"
+    "username":"ajit_yadav",
+    "password":"ajit_123"
 }
 
 ###
@@ -23,6 +23,50 @@ POST http://localhost:3000/forget-password
 Content-Type: application/json
 
 {
-    "username":"arun_prajapati",
-    "email":"arunpraja5@gmail.com"
+    "username":"ajit_yadav",
+    "email":"ajit@gmail.com"
 }
+
+
+###
+
+GET http://localhost:3000/post/
+
+
+###
+
+GET http://localhost:3000/post/3/
+
+###
+
+POST http://localhost:3000/add-post/
+Content-Type: application/json
+
+{
+    "postId":8,
+    "postContent":"Help receive certainly case",
+    "commentContent":"Remember country",
+    "reactionType":"LIKE",
+    "postedAt":"2023-01-10 15:09:32"
+}
+
+###
+
+PUT http://localhost:3000/update-post/1/
+Content-Type: application/json
+
+{
+    "postContent":"Design clear grow lot",
+    "commentContent":"Should language hot get law",
+    "reactionType":"DISLIKE",
+    "postedAt":"2023-01-10 15:09:32"
+}
+
+###
+
+DELETE http://localhost:3000/delete-post/8/
+
+
+###
+
+GET http://localhost:3000/recent-post/
