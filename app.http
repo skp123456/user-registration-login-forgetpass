@@ -21,6 +21,7 @@ Content-Type: application/json
 
 POST http://localhost:3000/forget-password
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU
 
 {
     "username":"ajit_yadav",
@@ -31,16 +32,19 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/post/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU
 
 
 ###
 
-GET http://localhost:3000/post/3/
+GET http://localhost:3000/post/1/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU
 
 ###
 
 POST http://localhost:3000/add-post/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU
 
 {
     "postId":8,
@@ -54,6 +58,7 @@ Content-Type: application/json
 
 PUT http://localhost:3000/update-post/1/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU
 
 {
     "postContent":"Design clear grow lot",
@@ -65,8 +70,10 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3000/delete-post/8/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU
 
 
 ###
 
 GET http://localhost:3000/recent-post/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFqaXRfeWFkYXYiLCJpYXQiOjE2Nzk3NDM0NjN9.gPhbye583PC-UZL6V9o4_jK3Ok-OlxFcajcJe-ALKMU

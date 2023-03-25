@@ -5,6 +5,7 @@ const sqlite3 = require("sqlite3");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 app.use(express.json());
@@ -28,6 +29,29 @@ const initializeDbAndServer = async () => {
   }
 };
 initializeDbAndServer();
+
+//Authenticate JWT Token using middleware function
+
+const authenticateToken = (request, response, next) => {
+  let jwtToken;
+  const authHead = request.headers["authorization"];
+  if (authHead !== undefined) {
+    jwtToken = authHead.split(" ")[1];
+  }
+  if (jwtToken === undefined) {
+    response.status(401);
+    response.send("Invalid JWT Token");
+  } else {
+    jwt.verify(jwtToken, "MY_SECRET_TOKEN", (error, payload) => {
+      if (error) {
+        response.status(401);
+        response.send("Invalid JWT Token");
+      } else {
+        next();
+      }
+    });
+  }
+};
 
 //Registration API
 
@@ -77,7 +101,9 @@ app.post("/login", async (request, response) => {
   } else {
     const isPasswordMatched = await bcrypt.compare(password, dbUser.password);
     if (isPasswordMatched === true) {
-      response.send("Login Success!");
+      const payload = { username: username };
+      const jwtToken = jwt.sign(payload, "MY_SECRET_TOKEN");
+      response.send({ jwtToken: jwtToken });
     } else {
       response.status(400);
       response.send("Invalid Password");
@@ -87,7 +113,7 @@ app.post("/login", async (request, response) => {
 
 //Forget password API
 
-app.post("/forget-password", async (request, response) => {
+app.post("/forget-password", authenticateToken, async (request, response) => {
   const { username, email } = request.body;
   const selectUserUserQuery = `
     SELECT *
@@ -123,7 +149,7 @@ app.post("/forget-password", async (request, response) => {
 
 //Get list of all posts API
 
-app.get("/post/", async (request, response) => {
+app.get("/post/", authenticateToken, async (request, response) => {
   const getPostDetailsQuery = `
     SELECT *
     FROM post_details;
@@ -134,7 +160,7 @@ app.get("/post/", async (request, response) => {
 
 //Get a specific post API
 
-app.get("/post/:postId/", async (request, response) => {
+app.get("/post/:postId/", authenticateToken, async (request, response) => {
   const { postId } = request.params;
   const getSinglePostQuery = `
         SELECT *
@@ -148,7 +174,7 @@ app.get("/post/:postId/", async (request, response) => {
 
 //Create new post details API
 
-app.post("/add-post/", async (request, response) => {
+app.post("/add-post/", authenticateToken, async (request, response) => {
   const postDetails = request.body;
   const {
     postId,
@@ -175,10 +201,18 @@ app.post("/add-post/", async (request, response) => {
 
 //Update post details API
 
-app.put("/update-post/:postId/", async (request, response) => {
-  const { postId } = request.params;
-  const { postContent, commentContent, reactionType, postedAt } = request.body;
-  const updatePostQuery = `
+app.put(
+  "/update-post/:postId/",
+  authenticateToken,
+  async (request, response) => {
+    const { postId } = request.params;
+    const {
+      postContent,
+      commentContent,
+      reactionType,
+      postedAt,
+    } = request.body;
+    const updatePostQuery = `
     UPDATE post_details
     SET
     post_content = '${postContent}',
@@ -188,26 +222,31 @@ app.put("/update-post/:postId/", async (request, response) => {
     WHERE
     post_id = ${postId};
   `;
-  await db.run(updatePostQuery);
-  response.send("Post Details Updated!");
-});
+    await db.run(updatePostQuery);
+    response.send("Post Details Updated!");
+  }
+);
 
 //Delete post details API
 
-app.delete("/delete-post/:postId/", async (request, response) => {
-  const { postId } = request.params;
-  const deletePostQuery = `
+app.delete(
+  "/delete-post/:postId/",
+  authenticateToken,
+  async (request, response) => {
+    const { postId } = request.params;
+    const deletePostQuery = `
         DELETE FROM post_details
         WHERE 
         post_id = ${postId};
     `;
-  await db.run(deletePostQuery);
-  response.send("Post Removed!");
-});
+    await db.run(deletePostQuery);
+    response.send("Post Removed!");
+  }
+);
 
 //Get top 3 recent posts API
 
-app.get("/recent-post/", async (request, response) => {
+app.get("/recent-post/", authenticateToken, async (request, response) => {
   const getTopThreeRecentPostQuery = `
         SELECT *
         FROM post_details

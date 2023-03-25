@@ -131,8 +131,34 @@ Written APIs to perform operations on the table `user_details` and `post_details
       ```
     - **Status text**
       ```
-      Login success!
+      {
+        "jwtToken": "eyJhbGciOiJIUz......"
+      }
       ```
+
+Authentication with Token
+
+- **Scenario 1**
+
+- **Description**:
+
+  If the token is not provided by the user or an invalid token
+
+- **Response**
+
+- **Status code**
+
+```
+401
+```
+
+Body
+
+```
+Invalid JWT Token
+```
+
+**Scenario 2** After successful verification of token proceed to next middleware or handler
 
 ### API 3
 
